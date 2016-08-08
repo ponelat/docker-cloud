@@ -1,0 +1,2 @@
+docker run -it -v /usr/bin/docker:/usr/bin/docker -v /var/run/docker.sock:/var/run/docker.sock -e DOCKERCLOUD_USER=$DOCKERCLOUD_USER -e DOCKERCLOUD_APIKEY=$DOCKERCLOUD_APIKEY --rm dockercloud/cli $@
+
