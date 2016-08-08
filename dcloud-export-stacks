@@ -1,0 +1,11 @@
+#!/bin/sh
+alias _dcloud="docker run -it -v /usr/bin/docker:/usr/bin/docker -v /var/run/docker.sock:/var/run/docker.sock -e DOCKERCLOUD_USER=$DOCKERCLOUD_USER -e DOCKERCLOUD_APIKEY=$DOCKERCLOUD_APIKEY --rm dockercloud/cli"
+
+stacks=`_dcloud stack ls | tail -n +2 | awk '{print $1}'`
+dir=${1:-.}
+
+for stack in $stacks; do
+  path=$dir/$stack.yml
+  echo Exporting... $path
+  _dcloud stack export $stack > $path
+done
