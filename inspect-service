@@ -1,0 +1,10 @@
+#!/usr/bin/env zsh
+alias dcloud="docker run -it -v /usr/bin/docker:/usr/bin/docker -v /var/run/docker.sock:/var/run/docker.sock -e DOCKERCLOUD_USER=$DOCKERCLOUD_USER -e DOCKERCLOUD_APIKEY=$DOCKERCLOUD_APIKEY --rm dockercloud/cli"
+
+[[ ! -f 'services' ]] && dcloud service ps > services
+
+
+ID=`cat services | fzf | awk '{ print $2 }'`
+dcloud service inspect $ID > last_container
+
+cat last_container
