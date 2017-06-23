@@ -1,0 +1,12 @@
+#!/bin/bash
+
+hash fzf 2>/dev/null || { echo >&2 "I require fzf but it's not installed.  Aborting. Go install it! https://github.com/junegunn/fzf#installation"; exit 1; }
+hash dcloud 2>/dev/null || { echo >&2 "I require dcloud but it's not installed.  Aborting. Go install it! https://github.com/ponelat/docker-cloud/blob/master/dcloud"; exit 1; }
+
+# This creates a cache file. Remember to delete it now and then!
+if [[ ! -f ~/.dockercloud/swaggerhub-dev.txt ]] ; then
+  mkdir ~/.dockercloud || echo ''
+  dcloud container ps --no-trunc > ~/.dockercloud/swaggerhub-dev.txt
+fi
+
+cat ~/.dockercloud/swaggerhub-dev.txt | fzf | awk '{ print $2 }'
