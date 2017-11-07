@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Usage:
+# dcloud-logs:          Pick a container and follow its log output
+# dcloud-logs capture:  Follow and save a container's log output. Logs written to a file named with container ID in ~/.dockercloud/
+
+export SERVICE=`dcloud-id`
+export LOG_PATH=~/.dockercloud/$SERVICE.log
+
+if [ "$1" == "capture" ]
+    then
+        echo
+        echo "Saving output to $LOG_PATH"
+        echo 
+        dcloud container logs -f $SERVICE 2>&1 | tee $LOG_PATH
+    else
+        dcloud container logs -f $SERVICE
+fi
